@@ -1,25 +1,71 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import BlogCard from './BlogCard';
+import { isArrayEmpty } from './Utils';
+
+/*
+  INSIDE Function App():
+  const name = 'John';
+  const lastName = 'Wick';
+  const age = 28;
+  const job = 'Gentleman';
+  
+  const getFullName = (name, lastName) => {
+    return `${name} ${lastName}`
+  }
+
+  const nArr = [1, 2, 3, 4]
+
+  const inputPlaceHolder = 'Enter your data';
+  const detailsInputBox = <input placeholder={inputPlaceHolder} autoComplete/>
+
+  const blogObj = {
+    title: 'Blog Title 1',
+    description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit, dictumst quisque euismod lectus sapien blandit, convallis metus magnis vel ridiculus justo.'}
+
+  }*/
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const blogArray = [
+        {
+          id: 1,
+          title: "Blog Title 1",
+          description: "Lorem ipsum dolor sit amet consectetur adipiscing, elit dictum dis imperdiet senectus inceptos platea, sollicitudin tellus risus hendrerit iaculis. "
+        },
+        {
+          id: 2,
+          title: "Blog Title 2",
+          description: "Lorem ipsum dolor sit amet consectetur adipiscing, elit dictum dis imperdiet senectus inceptos platea, sollicitudin tellus risus hendrerit iaculis. "
+        },
+        {
+          id: 3,
+          title: "Blog Title 3",
+          description: "Lorem ipsum dolor sit amet consectetur adipiscing, elit dictum dis imperdiet senectus inceptos platea, sollicitudin tellus risus hendrerit iaculis. "
+        }
+    ]
+
+    const blogCards = isArrayEmpty(blogArray) ? [] : blogArray.map((item, pos) => {
+      console.log(item);
+
+      return (
+        <BlogCard className={'Blog'} key={pos} title={item.title} description={item.description} id={item.id} />
+        /*<div className="BlogCard" key={item.id}>
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
+        </div>*/
+      )
+    })
+
+    return (
+      <div className="App">
+        {blogCards}
+      </div>
+    )
+
+  /*  React.createElement("div", {
+      className: "App"
+    }, React.createElement("div", null, React.createElement("h3", null, blogObj.title), React.createElement("p", null, blogObj.description)), React.createElement("div", null, React.createElement("h3", null, blogObj.title), React.createElement("p", null, blogObj.description)), React.createElement("div", null, React.createElement("h3", null, blogObj.title), React.createElement("p", null, blogObj.description)))*/
 }
 
 export default App;
