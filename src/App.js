@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import BlogCard from './BlogCard';
 import { isArrayEmpty } from './Utils';
@@ -25,31 +25,37 @@ import { isArrayEmpty } from './Utils';
 
   }*/
 
-function App() {
+class App extends Component {
 
-    const blogArray = [
+  state = {
+    showBlogs: true
+  }
+    blogArray = [
         {
           id: 1,
           title: "Blog Title 1",
-          description: "Lorem ipsum dolor sit amet consectetur adipiscing, elit dictum dis imperdiet senectus inceptos platea, sollicitudin tellus risus hendrerit iaculis. "
+          description: "Lorem ipsum dolor sit amet consectetur adipiscing, elit dictum dis imperdiet senectus inceptos platea, sollicitudin tellus risus hendrerit iaculis. ",
+          likeCount: 0,
         },
         {
           id: 2,
           title: "Blog Title 2",
-          description: "Lorem ipsum dolor sit amet consectetur adipiscing, elit dictum dis imperdiet senectus inceptos platea, sollicitudin tellus risus hendrerit iaculis. "
+          description: "Lorem ipsum dolor sit amet consectetur adipiscing, elit dictum dis imperdiet senectus inceptos platea, sollicitudin tellus risus hendrerit iaculis. ",
+          likeCount: 0,
         },
         {
           id: 3,
           title: "Blog Title 3",
-          description: "Lorem ipsum dolor sit amet consectetur adipiscing, elit dictum dis imperdiet senectus inceptos platea, sollicitudin tellus risus hendrerit iaculis. "
+          description: "Lorem ipsum dolor sit amet consectetur adipiscing, elit dictum dis imperdiet senectus inceptos platea, sollicitudin tellus risus hendrerit iaculis. ",
+          likeCount: 0,
         }
     ]
 
-    const blogCards = isArrayEmpty(blogArray) ? [] : blogArray.map((item, pos) => {
+    blogCards = isArrayEmpty(this.blogArray) ? [] : this.blogArray.map((item, pos) => {
       console.log(item);
 
       return (
-        <BlogCard className={'Blog'} key={pos} title={item.title} description={item.description} id={item.id} />
+        <BlogCard className={'Blog'} key={pos} title={item.title} description={item.description} likeCount={item.likeCount} id={item.id} />
         /*<div className="BlogCard" key={item.id}>
           <h3>{item.title}</h3>
           <p>{item.description}</p>
@@ -57,11 +63,27 @@ function App() {
       )
     })
 
-    return (
-      <div className="App">
-        {blogCards}
+    onHideBtnClick = () => {
+      /* this.showBlogs = false;
+      console.log(this.showBlogs);
+      let updatedState = !this.state.showBlogs; */
+      this.setState ((prevState, prevProps) => {
+        return {showBlogs: !prevState.showBlogs}
+      });
+      console.log(this.state.showBlogs);
+    }
+
+    render(){
+      return(
+        <div className="App">
+        <button onClick={this.onHideBtnClick}>{this.state.showBlogs ? 'Hide blogs' : 'Show blogs'}</button>
+        <br></br>
+        {
+          this.state.showBlogs ? this.blogCards : null
+        }
       </div>
-    )
+      );
+    }
 
   /*  React.createElement("div", {
       className: "App"
