@@ -28,9 +28,8 @@ import { isArrayEmpty } from './Utils';
 class App extends Component {
 
   state = {
-    showBlogs: true
-  }
-    blogArray = [
+    showBlogs: true,
+    blogArray: [
         {
           id: 1,
           title: "Blog Title 1",
@@ -50,18 +49,17 @@ class App extends Component {
           likeCount: 0,
         }
     ]
+  }
 
-    blogCards = isArrayEmpty(this.blogArray) ? [] : this.blogArray.map((item, pos) => {
-      console.log(item);
+    onLikeBtnClick = (pos) =>{
+      const updatedBlogList = this.state.blogArray;
+      const updatedBlogObj = updatedBlogList[pos];
 
-      return (
-        <BlogCard className={'Blog'} key={pos} title={item.title} description={item.description} likeCount={item.likeCount} id={item.id} />
-        /*<div className="BlogCard" key={item.id}>
-          <h3>{item.title}</h3>
-          <p>{item.description}</p>
-        </div>*/
-      )
-    })
+      updatedBlogObj.likeCount = updatedBlogObj.likeCount + 1;
+      updatedBlogList[pos] = updatedBlogObj;
+
+      this.setState({blogArray: updatedBlogList});
+    }
 
     onHideBtnClick = () => {
       /* this.showBlogs = false;
@@ -74,14 +72,30 @@ class App extends Component {
     }
 
     render(){
+      console.log('Render Called');
+      console.log(this.state);
+
+      const blogCards = isArrayEmpty(this.state.blogArray) ? [] : this.state.blogArray.map((item, pos) => {
+          
+        return (
+          <BlogCard className={'Blog'} key={pos} title={item.title} description={item.description} likeCount={item.likeCount} id={item.id} onLikeBtnClick={() => this.onLikeBtnClick(pos)} />
+          /*<div className="BlogCard" key={item.id}>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+          </div>*/
+        )
+      })
+
       return(
         <div className="App">
-        <button onClick={this.onHideBtnClick}>{this.state.showBlogs ? 'Hide blogs' : 'Show blogs'}</button>
+          <button className="ShowHideBtn" onClick={this.onHideBtnClick}>
+          {this.state.showBlogs ? 'Hide blogs' : 'Show blogs'}
+          </button>
         <br></br>
         {
-          this.state.showBlogs ? this.blogCards : null
+          this.state.showBlogs ? blogCards : null
         }
-      </div>
+        </div>
       );
     }
 

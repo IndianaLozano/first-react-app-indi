@@ -2,7 +2,7 @@ import React from 'react';
 import { dumpLogs } from './Utils';
 //import './BlogCard.css';
 import classes from './BlogCard.module.css'
-import { Component } from 'react';
+//import { Component } from 'react';
 
 /* class BlogCard extends Component {
 
@@ -37,7 +37,7 @@ const BlogCard = (props) => {
             <h3>{props.title}</h3>
             <p>{props.description}</p>
             <p>Like count: <span className={classes.likeCount}>{props.likeCount}</span></p>
-            <button onClick={null}>Like</button>
+            <button onClick={props.onLikeBtnClick}>Like</button>
         </div>
     )
 }
